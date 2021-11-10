@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "storageAccountName": {
-            "value": "mxe21"
+            "value": "mxefn333"
         },
         "hostingPlanName": {
-            "value": "ASP-mxe21v2-8e7d"
+            "value": "ASP-mxefn333-8e7d"
         },
         "appName": {
-            "value": "mxe21v2"
+            "value": "mxefn333"
         },
         "appInsightsName": {
-            "value": "mxe21"
+            "value": "mxefn333"
         },
         "location": {
             "value": "norwayeast"
