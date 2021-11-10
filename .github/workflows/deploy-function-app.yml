@@ -1,0 +1,56 @@
+name: Deploy Function App
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "**.go"
+      - "bicep/**"
+      - "function-go/**"
+  workflow_dispatch:
+
+env:
+  AZURE_FUNCTIONAPP_NAME: mxefn333
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: "./function-go"
+  DEPLOYMENTNAME: "azfunc-${{ github.run_id }}"
+  RESOURCEGROUPNAME: "mxefn333"
+  GO_VERSION: "1.16"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: "Checkout GitHub Action"
+        uses: actions/checkout@master
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Build
+        run: go build -ldflags="-s -w" -o main .
+        working-directory: function-go/src
+
+      - name: "Login"
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: "Deploy Azure Resources"
+        uses: azure/arm-deploy@v1
+        with:
+          deploymentName: ${{ env.DEPLOYMENTNAME  }}
+          resourceGroupName: ${{ env.RESOURCEGROUPNAME }}
+          template: ./bicep/main.bicep
+          parameters: ./bicep/main.parameters.json
+
+      - name: "Deploy Function"
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}

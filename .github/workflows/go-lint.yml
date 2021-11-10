@@ -1,0 +1,32 @@
+name: golangci-lint
+on:
+  pull_request:
+    branches:
+      - master
+      - main
+    paths:
+      - "**.go"
+  workflow_dispatch:
+
+env:
+  GO_VERSION: "1.16"
+
+jobs:
+  golangci:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v2
+        with:
+          version: latest
+          working-directory: function-go/src
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Build
+        run: go build -ldflags="-s -w" -o main .
+        working-directory: function-go/src

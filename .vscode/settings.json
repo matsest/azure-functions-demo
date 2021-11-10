@@ -1,0 +1,6 @@
+{
+    "azureFunctions.deploySubpath": "function-go",
+    "azureFunctions.projectLanguage": "Custom",
+    "azureFunctions.projectRuntime": "~3",
+    "debug.internalConsoleOptions": "neverOpen"
+}
