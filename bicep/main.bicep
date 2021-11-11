@@ -15,7 +15,7 @@ resource stg 'Microsoft.Storage/storageAccounts@2021-06-01' = {
   kind: 'Storage'
   properties: {
     minimumTlsVersion: 'TLS1_2'
-    allowBlobPublicAccess: true
+    allowBlobPublicAccess: false
     networkAcls: {
       bypass: 'AzureServices'
       virtualNetworkRules: []
