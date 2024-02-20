@@ -41,7 +41,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: "Deploy Azure Resources"
-        uses: azure/arm-deploy@v1
+        uses: azure/arm-deploy@v2
         with:
           deploymentName: ${{ env.DEPLOYMENTNAME  }}
           resourceGroupName: ${{ env.RESOURCEGROUPNAME }}
